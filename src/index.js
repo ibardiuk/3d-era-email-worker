@@ -113,12 +113,7 @@ export default {
                                                   <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                                                       <tr>
                                                           <td align="center">
-                                                              <!-- Logo/Icon -->
-                                                              <div style="background: rgba(0, 212, 255, 0.15); width: 80px; height: 80px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px; border: 2px solid rgba(0, 212, 255, 0.3); box-shadow: 0 0 25px rgba(0, 212, 255, 0.2);">
-                                                                  <span style="font-size: 36px; color: #00d4ff;">🎯</span>
-                                                              </div>
-                                                              
-                                                              <!-- Company Title -->
+                                                               <!-- Company Title -->
                                                               <h1 style="margin: 0; color: #ffffff; font-size: 32px; font-weight: 700; letter-spacing: -0.8px; margin-bottom: 8px; text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);">3D ERA LAB</h1>
                                                               <p style="margin: 0; color: #a8b2c3; font-size: 16px; font-weight: 500; letter-spacing: 0.5px;">Advanced 3D Printing Solutions</p>
                                                           </td>
