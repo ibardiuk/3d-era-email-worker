@@ -93,16 +93,39 @@ export default {
 
       // Handle file attachment if present
       if (attachment && attachment.size > 0) {
+        // Check file size limit (10MB for Cloudflare Workers)
+        if (attachment.size > 10 * 1024 * 1024) {
+          return new Response(
+            JSON.stringify({ error: 'File too large. Maximum size is 10MB.' }),
+            {
+              status: 400,
+              headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+              },
+            }
+          );
+        }
+
         const attachmentBuffer = await attachment.arrayBuffer();
-        const attachmentBase64 = btoa(
-          String.fromCharCode(...new Uint8Array(attachmentBuffer))
-        );
+        
+        // Convert to base64 more efficiently for large files
+        const uint8Array = new Uint8Array(attachmentBuffer);
+        let binaryString = '';
+        const chunkSize = 8192; // Process in chunks to avoid stack overflow
+        
+        for (let i = 0; i < uint8Array.length; i += chunkSize) {
+          const chunk = uint8Array.slice(i, i + chunkSize);
+          binaryString += String.fromCharCode.apply(null, chunk);
+        }
+        
+        const attachmentBase64 = btoa(binaryString);
 
         emailPayload.attachments = [
           {
             filename: attachment.name,
             content: attachmentBase64,
-            content_type: attachment.type,
+            content_type: attachment.type || 'application/octet-stream',
           },
         ];
       }
