@@ -1,0 +1,12 @@
+name = "3d-era-email-worker"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# All environment variables should be set via Cloudflare Workers dashboard:
+# Go to Workers & Pages → Your Worker → Settings → Variables
+# 
+# Required Environment Variables:
+# - RESEND_API_KEY (encrypted) - Your Resend API key
+# - FROM_EMAIL (plain text) - Your verified sender email 
+# - TO_EMAIL (plain text) - Email to receive quote requests
