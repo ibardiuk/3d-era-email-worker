@@ -60,6 +60,16 @@ export default {
         );
       }
 
+      // Generate timestamp
+      const timestamp = new Date().toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+
       // Prepare email payload for Resend
       const emailPayload = {
         from: env.FROM_EMAIL,
@@ -67,124 +77,256 @@ export default {
         subject: `🎯 New 3D Printing Quote Request from ${firstName} ${lastName}`,
         html: `
           <!DOCTYPE html>
-          <html>
+          <html lang="en">
           <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>3D Printing Quote Request</title>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>3D Era Lab - Quote Request</title>
+              <!--[if mso]>
+              <noscript>
+                  <xml>
+                      <o:OfficeDocumentSettings>
+                          <o:PixelsPerInch>96</o:PixelsPerInch>
+                      </o:OfficeDocumentSettings>
+                  </xml>
+              </noscript>
+              <![endif]-->
           </head>
-          <body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f5f7fa; line-height: 1.6;">
-            <div style="max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); overflow: hidden;">
+          <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background: linear-gradient(135deg, #0a0f1b 0%, #1a1f2e 100%); min-height: 100vh;">
               
-              <!-- Header -->
-              <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center;">
-                <div style="font-size: 48px; margin-bottom: 10px;">🎯</div>
-                <h1 style="margin: 0; font-size: 28px; font-weight: 700;">New 3D Printing Quote Request</h1>
-                <p style="margin: 10px 0 0 0; font-size: 16px; opacity: 0.9;">A new customer is ready to bring their idea to life!</p>
-              </div>
-              
-              <!-- Customer Information -->
-              <div style="padding: 30px;">
-                <div style="background-color: #f8fafc; border-left: 4px solid #3b82f6; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
-                  <h2 style="margin: 0 0 15px 0; color: #1e293b; font-size: 20px; display: flex; align-items: center;">
-                    <span style="background-color: #3b82f6; color: white; width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-right: 10px; font-size: 14px;">👤</span>
-                    Customer Information
-                  </h2>
-                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                    <div>
-                      <div style="color: #64748b; font-size: 12px; text-transform: uppercase; font-weight: 600; margin-bottom: 4px;">Full Name</div>
-                      <div style="color: #1e293b; font-size: 16px; font-weight: 600;">${firstName} ${lastName}</div>
-                    </div>
-                    <div>
-                      <div style="color: #64748b; font-size: 12px; text-transform: uppercase; font-weight: 600; margin-bottom: 4px;">Phone</div>
-                      <div style="color: #1e293b; font-size: 16px; font-weight: 600;">${phone}</div>
-                    </div>
-                  </div>
-                  <div style="margin-top: 15px;">
-                    <div style="color: #64748b; font-size: 12px; text-transform: uppercase; font-weight: 600; margin-bottom: 4px;">Email Address</div>
-                    <div style="color: #1e293b; font-size: 16px; font-weight: 600;">
-                      <a href="mailto:${email}" style="color: #3b82f6; text-decoration: none;">${email}</a>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- Printing Requirements -->
-                <div style="background-color: #f0fdf4; border-left: 4px solid #22c55e; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
-                  <h2 style="margin: 0 0 15px 0; color: #1e293b; font-size: 20px; display: flex; align-items: center;">
-                    <span style="background-color: #22c55e; color: white; width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-right: 10px; font-size: 14px;">🎛️</span>
-                    Printing Specifications
-                  </h2>
-                  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
-                    <div style="text-align: center; background: white; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
-                      <div style="color: #64748b; font-size: 12px; text-transform: uppercase; font-weight: 600; margin-bottom: 8px;">Material</div>
-                      <div style="color: #1e293b; font-size: 16px; font-weight: 700;">${materialType}</div>
-                    </div>
-                    <div style="text-align: center; background: white; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
-                      <div style="color: #64748b; font-size: 12px; text-transform: uppercase; font-weight: 600; margin-bottom: 8px;">Accuracy</div>
-                      <div style="color: #1e293b; font-size: 16px; font-weight: 700;">${printingAccuracy}</div>
-                    </div>
-                    <div style="text-align: center; background: white; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
-                      <div style="color: #64748b; font-size: 12px; text-transform: uppercase; font-weight: 600; margin-bottom: 8px;">Color</div>
-                      <div style="color: #1e293b; font-size: 16px; font-weight: 700;">${materialColor}</div>
-                    </div>
-                  </div>
-                </div>
-                
-                ${comment ? `
-                <!-- Additional Comments -->
-                <div style="background-color: #fefbf3; border-left: 4px solid #f59e0b; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
-                  <h2 style="margin: 0 0 15px 0; color: #1e293b; font-size: 20px; display: flex; align-items: center;">
-                    <span style="background-color: #f59e0b; color: white; width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-right: 10px; font-size: 14px;">💭</span>
-                    Additional Comments
-                  </h2>
-                  <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; font-style: italic; color: #374151;">
-                    "${comment.replace(/\n/g, '<br>')}"
-                  </div>
-                </div>
-                ` : ''}
-                
-                ${attachment && attachment.size > 0 ? `
-                <!-- File Attachment -->
-                <div style="background-color: #f3f4f6; border-left: 4px solid #6b7280; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
-                  <h2 style="margin: 0 0 10px 0; color: #1e293b; font-size: 18px; display: flex; align-items: center;">
-                    <span style="background-color: #6b7280; color: white; width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-right: 10px; font-size: 14px;">📎</span>
-                    File Attachment Included
-                  </h2>
-                  <div style="background: white; padding: 12px; border-radius: 6px; border: 1px solid #e2e8f0; display: flex; align-items: center;">
-                    <span style="margin-right: 8px; font-size: 20px;">📄</span>
-                    <span style="color: #374151; font-weight: 500;">${attachment.name}</span>
-                    <span style="margin-left: auto; color: #6b7280; font-size: 14px;">${(attachment.size / 1024 / 1024).toFixed(2)} MB</span>
-                  </div>
-                </div>
-                ` : ''}
-                
-                <!-- Action Section -->
-                <div style="text-align: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px; border-radius: 8px; margin: 25px 0;">
-                  <h3 style="margin: 0 0 15px 0; font-size: 18px;">Ready to provide a quote?</h3>
-                  <a href="mailto:${email}?subject=Re: 3D Printing Quote Request" 
-                     style="display: inline-block; background: white; color: #667eea; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 16px;">
-                    Reply to Customer
-                  </a>
-                </div>
-              </div>
-              
-              <!-- Footer -->
-              <div style="background-color: #f8fafc; padding: 20px; text-align: center; border-top: 1px solid #e2e8f0;">
-                <p style="margin: 0; color: #64748b; font-size: 14px;">
-                  📅 Received on ${new Date().toLocaleDateString('en-US', { 
-                    weekday: 'long', 
-                    year: 'numeric', 
-                    month: 'long', 
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                  })}
-                </p>
-                <p style="margin: 5px 0 0 0; color: #94a3b8; font-size: 12px;">
-                  This quote request was submitted via your website contact form.
-                </p>
-              </div>
-            </div>
+              <!-- Email Wrapper -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: linear-gradient(135deg, #0a0f1b 0%, #1a1f2e 100%); min-height: 100vh; padding: 20px 0;">
+                  <tr>
+                      <td align="center" style="padding: 20px;">
+                          
+                          <!-- Main Container -->
+                          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="max-width: 600px; width: 100%; background: #1a1f2e; border-radius: 12px; border: 1px solid rgba(0, 212, 255, 0.2); box-shadow: 0 0 30px rgba(0, 212, 255, 0.1), 0 20px 40px rgba(0, 0, 0, 0.3);">
+                              
+                              <!-- Header Section -->
+                              <tr>
+                                  <td style="padding: 0;">
+                                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                          <tr>
+                                              <td style="background: linear-gradient(135deg, #0a0f1b 0%, #2a2f3e 100%); padding: 40px 30px; text-align: center; border-radius: 12px 12px 0 0; border-bottom: 2px solid #00d4ff; position: relative;">
+                                                  
+                                                  <!-- Header Content -->
+                                                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                                      <tr>
+                                                          <td align="center">
+                                                              <!-- Logo/Icon -->
+                                                              <div style="background: rgba(0, 212, 255, 0.15); width: 80px; height: 80px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px; border: 2px solid rgba(0, 212, 255, 0.3); box-shadow: 0 0 25px rgba(0, 212, 255, 0.2);">
+                                                                  <span style="font-size: 36px; color: #00d4ff;">🎯</span>
+                                                              </div>
+                                                              
+                                                              <!-- Company Title -->
+                                                              <h1 style="margin: 0; color: #ffffff; font-size: 32px; font-weight: 700; letter-spacing: -0.8px; margin-bottom: 8px; text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);">3D ERA LAB</h1>
+                                                              <p style="margin: 0; color: #a8b2c3; font-size: 16px; font-weight: 500; letter-spacing: 0.5px;">Advanced 3D Printing Solutions</p>
+                                                          </td>
+                                                      </tr>
+                                                  </table>
+                                              </td>
+                                          </tr>
+                                      </table>
+                                  </td>
+                              </tr>
+
+                              <!-- Title Bar -->
+                              <tr>
+                                  <td style="padding: 0;">
+                                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                          <tr>
+                                              <td style="background: #2a2f3e; padding: 25px 30px; border-bottom: 1px solid rgba(0, 212, 255, 0.2);">
+                                                  <h2 style="margin: 0; color: #ffffff; font-size: 26px; font-weight: 600; text-align: center; letter-spacing: -0.5px;">New Quote Request</h2>
+                                                  <div style="width: 60px; height: 3px; background: linear-gradient(90deg, #00d4ff, rgba(0, 212, 255, 0.3)); margin: 12px auto 0; border-radius: 2px; box-shadow: 0 0 8px rgba(0, 212, 255, 0.4);"></div>
+                                              </td>
+                                          </tr>
+                                      </table>
+                                  </td>
+                              </tr>
+
+                              <!-- Main Content -->
+                              <tr>
+                                  <td style="padding: 35px 30px;">
+                                      
+                                      <!-- Customer Information -->
+                                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 35px;">
+                                          <tr>
+                                              <td style="background: #0a0f1b; border-radius: 10px; padding: 28px; border: 1px solid rgba(0, 212, 255, 0.2); box-shadow: 0 0 20px rgba(0, 212, 255, 0.08);">
+                                                  
+                                                  <!-- Section Header -->
+                                                  <h3 style="margin: 0 0 20px 0; color: #00d4ff; font-size: 20px; font-weight: 600; display: flex; align-items: center; padding-bottom: 15px; border-bottom: 1px solid rgba(0, 212, 255, 0.3);">
+                                                      <span style="margin-right: 12px; font-size: 22px;">👤</span>Customer Information
+                                                  </h3>
+                                                  
+                                                  <!-- Customer Data Rows -->
+                                                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                                      <tr>
+                                                          <td style="padding: 14px 0; border-bottom: 1px solid #2a2f3e;">
+                                                              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                                                  <tr>
+                                                                      <td style="color: #6b7280; font-size: 14px; font-weight: 600; width: 35%; text-transform: uppercase; letter-spacing: 0.5px;">Full Name</td>
+                                                                      <td style="color: #ffffff; font-size: 16px; font-weight: 600; text-align: right;">${firstName} ${lastName}</td>
+                                                                  </tr>
+                                                              </table>
+                                                          </td>
+                                                      </tr>
+                                                      <tr>
+                                                          <td style="padding: 14px 0; border-bottom: 1px solid #2a2f3e;">
+                                                              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                                                  <tr>
+                                                                      <td style="color: #6b7280; font-size: 14px; font-weight: 600; width: 35%; text-transform: uppercase; letter-spacing: 0.5px;">Email</td>
+                                                                      <td style="text-align: right;">
+                                                                          <a href="mailto:${email}" style="color: #00d4ff; font-size: 16px; font-weight: 600; text-decoration: none; text-shadow: 0 0 5px rgba(0, 212, 255, 0.3);">${email}</a>
+                                                                      </td>
+                                                                  </tr>
+                                                              </table>
+                                                          </td>
+                                                      </tr>
+                                                      <tr>
+                                                          <td style="padding: 14px 0;">
+                                                              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                                                  <tr>
+                                                                      <td style="color: #6b7280; font-size: 14px; font-weight: 600; width: 35%; text-transform: uppercase; letter-spacing: 0.5px;">Phone</td>
+                                                                      <td style="color: #ffffff; font-size: 16px; font-weight: 600; text-align: right;">${phone}</td>
+                                                                  </tr>
+                                                              </table>
+                                                          </td>
+                                                      </tr>
+                                                  </table>
+                                              </td>
+                                          </tr>
+                                      </table>
+
+                                      <!-- Printing Specifications -->
+                                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 35px;">
+                                          <tr>
+                                              <td style="background: #0a0f1b; border-radius: 10px; padding: 28px; border: 1px solid rgba(0, 212, 255, 0.2); box-shadow: 0 0 20px rgba(0, 212, 255, 0.08);">
+                                                  
+                                                  <!-- Section Header -->
+                                                  <h3 style="margin: 0 0 20px 0; color: #00d4ff; font-size: 20px; font-weight: 600; display: flex; align-items: center; padding-bottom: 15px; border-bottom: 1px solid rgba(0, 212, 255, 0.3);">
+                                                      <span style="margin-right: 12px; font-size: 22px;">⚙️</span>Printing Specifications
+                                                  </h3>
+                                                  
+                                                  <!-- Specs Grid -->
+                                                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                                      <tr>
+                                                          <!-- Material Card -->
+                                                          <td width="33%" style="padding-right: 12px;">
+                                                              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: #1a1f2e; border-radius: 8px; padding: 22px 16px; text-align: center; border: 1px solid rgba(0, 212, 255, 0.2); position: relative;">
+                                                                  <tr>
+                                                                      <td>
+                                                                          <!-- Top accent bar -->
+                                                                          <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #00d4ff, rgba(0, 212, 255, 0.3)); border-radius: 8px 8px 0 0;"></div>
+                                                                          <p style="margin: 0 0 10px 0; color: #6b7280; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Material</p>
+                                                                          <p style="margin: 0; color: #ffffff; font-size: 17px; font-weight: 700;">${materialType}</p>
+                                                                      </td>
+                                                                  </tr>
+                                                              </table>
+                                                          </td>
+                                                          
+                                                          <!-- Accuracy Card -->
+                                                          <td width="33%" style="padding: 0 6px;">
+                                                              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: #1a1f2e; border-radius: 8px; padding: 22px 16px; text-align: center; border: 1px solid rgba(0, 212, 255, 0.2); position: relative;">
+                                                                  <tr>
+                                                                      <td>
+                                                                          <!-- Top accent bar -->
+                                                                          <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #00d4ff, rgba(0, 212, 255, 0.3)); border-radius: 8px 8px 0 0;"></div>
+                                                                          <p style="margin: 0 0 10px 0; color: #6b7280; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Accuracy</p>
+                                                                          <p style="margin: 0; color: #ffffff; font-size: 17px; font-weight: 700;">${printingAccuracy}</p>
+                                                                      </td>
+                                                                  </tr>
+                                                              </table>
+                                                          </td>
+                                                          
+                                                          <!-- Color Card -->
+                                                          <td width="33%" style="padding-left: 12px;">
+                                                              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: #1a1f2e; border-radius: 8px; padding: 22px 16px; text-align: center; border: 1px solid rgba(0, 212, 255, 0.2); position: relative;">
+                                                                  <tr>
+                                                                      <td>
+                                                                          <!-- Top accent bar -->
+                                                                          <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #00d4ff, rgba(0, 212, 255, 0.3)); border-radius: 8px 8px 0 0;"></div>
+                                                                          <p style="margin: 0 0 10px 0; color: #6b7280; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Color</p>
+                                                                          <p style="margin: 0; color: #ffffff; font-size: 17px; font-weight: 700;">${materialColor}</p>
+                                                                      </td>
+                                                                  </tr>
+                                                              </table>
+                                                          </td>
+                                                      </tr>
+                                                  </table>
+                                              </td>
+                                          </tr>
+                                      </table>
+
+                                      ${comment ? `
+                                      <!-- Project Requirements -->
+                                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 35px;">
+                                          <tr>
+                                              <td style="background: #0a0f1b; border-radius: 10px; padding: 28px; border: 1px solid rgba(0, 212, 255, 0.2); box-shadow: 0 0 20px rgba(0, 212, 255, 0.08);">
+                                                  
+                                                  <!-- Section Header -->
+                                                  <h3 style="margin: 0 0 20px 0; color: #00d4ff; font-size: 20px; font-weight: 600; display: flex; align-items: center; padding-bottom: 15px; border-bottom: 1px solid rgba(0, 212, 255, 0.3);">
+                                                      <span style="margin-right: 12px; font-size: 22px;">💭</span>Project Requirements
+                                                  </h3>
+                                                  
+                                                  <!-- Comment Content -->
+                                                  <div style="background: #1a1f2e; border-left: 4px solid #00d4ff; border-radius: 8px; padding: 22px; border: 1px solid rgba(0, 212, 255, 0.2); box-shadow: 0 0 15px rgba(0, 212, 255, 0.1);">
+                                                      <p style="margin: 0; color: #a8b2c3; font-size: 16px; line-height: 1.7; font-style: italic;">"${comment.replace(/\n/g, '<br>')}"</p>
+                                                  </div>
+                                              </td>
+                                          </tr>
+                                      </table>
+                                      ` : ''}
+
+                                      ${attachment && attachment.size > 0 ? `
+                                      <!-- File Attachments -->
+                                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 35px;">
+                                          <tr>
+                                              <td style="background: #0a0f1b; border-radius: 10px; padding: 28px; border: 1px solid rgba(0, 212, 255, 0.2); box-shadow: 0 0 20px rgba(0, 212, 255, 0.08);">
+                                                  
+                                                  <!-- Section Header -->
+                                                  <h3 style="margin: 0 0 20px 0; color: #00d4ff; font-size: 20px; font-weight: 600; display: flex; align-items: center; padding-bottom: 15px; border-bottom: 1px solid rgba(0, 212, 255, 0.3);">
+                                                      <span style="margin-right: 12px; font-size: 22px;">📎</span>Attached Files
+                                                  </h3>
+                                                  
+                                                  <!-- File Item -->
+                                                  <div style="background: #1a1f2e; border-radius: 8px; padding: 20px; border: 1px solid rgba(0, 212, 255, 0.2); display: flex; align-items: center;">
+                                                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                                          <tr>
+                                                              <td width="60" style="padding-right: 16px;">
+                                                                  <div style="background: linear-gradient(135deg, #00d4ff, #0099cc); color: #0a0f1b; width: 50px; height: 50px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 700; box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);">📄</div>
+                                                              </td>
+                                                              <td>
+                                                                  <p style="margin: 0 0 6px 0; color: #ffffff; font-size: 17px; font-weight: 600;">${attachment.name}</p>
+                                                                  <p style="margin: 0; color: #6b7280; font-size: 13px; font-weight: 500;">${(attachment.size / 1024 / 1024).toFixed(2)} MB • ${attachment.type || 'File'} • Uploaded just now</p>
+                                                              </td>
+                                                          </tr>
+                                                      </table>
+                                                  </div>
+                                              </td>
+                                          </tr>
+                                      </table>
+                                      ` : ''}
+
+                                  </td>
+                              </tr>
+
+                              <!-- Footer -->
+                              <tr>
+                                  <td style="background: #0a0f1b; padding: 30px; text-align: center; border-radius: 0 0 12px 12px; border-top: 2px solid #00d4ff;">
+                                      <p style="margin: 0 0 12px 0; color: #a8b2c3; font-size: 15px; line-height: 1.6;">
+                                          Received on <span style="color: #00d4ff; font-weight: 600;">${timestamp}</span>
+                                      </p>
+                                      <p style="margin: 0; color: #6b7280; font-size: 12px; line-height: 1.5; letter-spacing: 0.3px;">
+                                          This quote request was generated by your 3D Era Lab email system.<br>
+                                          © 2024 3D Era Lab • Advanced 3D Printing Solutions
+                                      </p>
+                                  </td>
+                              </tr>
+
+                          </table>
+                      </td>
+                  </tr>
+              </table>
           </body>
           </html>
         `,
