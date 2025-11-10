@@ -22,6 +22,7 @@ A Cloudflare Worker for handling 3D printing quote request emails with file atta
 - **materialType*** - Selected material type
 - **printingAccuracy*** - Selected printing accuracy
 - **materialColor*** - Selected material color
+- **infill** - Infill percentage/density (optional)
 - **comment** - Additional comments (optional, 1000 char limit)
 - **attachment** - File upload (optional)
 
@@ -91,6 +92,7 @@ const handleSubmit = async (formData) => {
   form.append('materialType', materialType);
   form.append('printingAccuracy', printingAccuracy);
   form.append('materialColor', materialColor);
+  form.append('infill', infill);
   form.append('comment', comment);
   
   // Add file if selected
