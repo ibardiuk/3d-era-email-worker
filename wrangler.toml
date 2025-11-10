@@ -1,4 +1,4 @@
-name = "3d-era-email-worker"
+name = "3d-era-lab-email-sender"
 main = "src/index.js"
 compatibility_date = "2024-01-01"
 compatibility_flags = ["nodejs_compat"]
