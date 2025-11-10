@@ -28,6 +28,7 @@ export default {
       const materialType = formData.get('materialType');
       const printingAccuracy = formData.get('printingAccuracy');
       const materialColor = formData.get('materialColor');
+      const infill = formData.get('infill');
       const comment = formData.get('comment');
       const attachment = formData.get('attachment');
 
@@ -206,42 +207,56 @@ export default {
                                                   <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                                                       <tr>
                                                           <!-- Material Card -->
-                                                          <td width="33%" style="padding-right: 12px;">
-                                                              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: #1a1f2e; border-radius: 8px; padding: 22px 16px; text-align: center; border: 1px solid rgba(0, 212, 255, 0.2); position: relative;">
+                                                          <td width="25%" style="padding-right: 8px;">
+                                                              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: #1a1f2e; border-radius: 8px; padding: 18px 12px; text-align: center; border: 1px solid rgba(0, 212, 255, 0.2); position: relative;">
                                                                   <tr>
                                                                       <td>
                                                                           <!-- Top accent bar -->
                                                                           <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #00d4ff, rgba(0, 212, 255, 0.3)); border-radius: 8px 8px 0 0;"></div>
-                                                                          <p style="margin: 0 0 10px 0; color: #6b7280; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Material</p>
-                                                                          <p style="margin: 0; color: #ffffff; font-size: 17px; font-weight: 700;">${materialType}</p>
+                                                                          <p style="margin: 0 0 8px 0; color: #6b7280; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Material</p>
+                                                                          <p style="margin: 0; color: #ffffff; font-size: 15px; font-weight: 700;">${materialType}</p>
                                                                       </td>
                                                                   </tr>
                                                               </table>
                                                           </td>
                                                           
                                                           <!-- Accuracy Card -->
-                                                          <td width="33%" style="padding: 0 6px;">
-                                                              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: #1a1f2e; border-radius: 8px; padding: 22px 16px; text-align: center; border: 1px solid rgba(0, 212, 255, 0.2); position: relative;">
+                                                          <td width="25%" style="padding: 0 4px;">
+                                                              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: #1a1f2e; border-radius: 8px; padding: 18px 12px; text-align: center; border: 1px solid rgba(0, 212, 255, 0.2); position: relative;">
                                                                   <tr>
                                                                       <td>
                                                                           <!-- Top accent bar -->
                                                                           <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #00d4ff, rgba(0, 212, 255, 0.3)); border-radius: 8px 8px 0 0;"></div>
-                                                                          <p style="margin: 0 0 10px 0; color: #6b7280; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Accuracy</p>
-                                                                          <p style="margin: 0; color: #ffffff; font-size: 17px; font-weight: 700;">${printingAccuracy}</p>
+                                                                          <p style="margin: 0 0 8px 0; color: #6b7280; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Accuracy</p>
+                                                                          <p style="margin: 0; color: #ffffff; font-size: 15px; font-weight: 700;">${printingAccuracy}</p>
                                                                       </td>
                                                                   </tr>
                                                               </table>
                                                           </td>
                                                           
                                                           <!-- Color Card -->
-                                                          <td width="33%" style="padding-left: 12px;">
-                                                              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: #1a1f2e; border-radius: 8px; padding: 22px 16px; text-align: center; border: 1px solid rgba(0, 212, 255, 0.2); position: relative;">
+                                                          <td width="25%" style="padding: 0 4px;">
+                                                              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: #1a1f2e; border-radius: 8px; padding: 18px 12px; text-align: center; border: 1px solid rgba(0, 212, 255, 0.2); position: relative;">
                                                                   <tr>
                                                                       <td>
                                                                           <!-- Top accent bar -->
                                                                           <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #00d4ff, rgba(0, 212, 255, 0.3)); border-radius: 8px 8px 0 0;"></div>
-                                                                          <p style="margin: 0 0 10px 0; color: #6b7280; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Color</p>
-                                                                          <p style="margin: 0; color: #ffffff; font-size: 17px; font-weight: 700;">${materialColor}</p>
+                                                                          <p style="margin: 0 0 8px 0; color: #6b7280; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Color</p>
+                                                                          <p style="margin: 0; color: #ffffff; font-size: 15px; font-weight: 700;">${materialColor}</p>
+                                                                      </td>
+                                                                  </tr>
+                                                              </table>
+                                                          </td>
+                                                          
+                                                          <!-- Infill Card -->
+                                                          <td width="25%" style="padding-left: 8px;">
+                                                              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: #1a1f2e; border-radius: 8px; padding: 18px 12px; text-align: center; border: 1px solid rgba(0, 212, 255, 0.2); position: relative;">
+                                                                  <tr>
+                                                                      <td>
+                                                                          <!-- Top accent bar -->
+                                                                          <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #00d4ff, rgba(0, 212, 255, 0.3)); border-radius: 8px 8px 0 0;"></div>
+                                                                          <p style="margin: 0 0 8px 0; color: #6b7280; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Infill</p>
+                                                                          <p style="margin: 0; color: #ffffff; font-size: 15px; font-weight: 700;">${infill || 'Not specified'}</p>
                                                                       </td>
                                                                   </tr>
                                                               </table>
